@@ -14,6 +14,7 @@ const getConnectionStrings = () => {
       "<db_password>",
       process.env.DATABASE_PASSWORD
     );
+    connectUrl = connectUrl.replace("<dbname>", process.env.DB_NAME);
   } else {
     process.env.DATABASE_PROD;
   }
