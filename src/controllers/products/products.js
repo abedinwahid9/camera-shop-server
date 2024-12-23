@@ -4,7 +4,7 @@ const Product = require("../../models/product"); // Adjust the path to your Prod
 // Get all products
 const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("user", "name email");
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve products", error });
