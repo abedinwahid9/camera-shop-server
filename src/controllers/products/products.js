@@ -11,6 +11,35 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getProductByEmail = async (req, res) => {
+  const { email } = req.params; // Extract user ID from request parameters
+  console.log(email);
+  try {
+    // Query products where the user field matches the specific user ID
+    const products = await Product.find().populate({
+      path: "user",
+      match: { email: email }, // Filter the populated `user` documents by email
+      select: "email",
+    });
+
+    const filter = products.filter((product) => product.user);
+
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found for this user ID" });
+    }
+
+    res.status(200).json(filter); // Send the products as a response
+  } catch (err) {
+    console.error(err); // Log the error for debugging
+    res.status(500).json({
+      message: "Failed to retrieve the products by user ID",
+      error: err.message, // Include the error message
+    });
+  }
+};
+
 // Get a single product by ID
 const getProductById = async (req, res) => {
   const { id } = req.params;
@@ -69,6 +98,7 @@ const deleteProduct = async (req, res) => {
 module.exports = {
   getProducts,
   getProductById,
+  getProductByEmail,
   createProduct,
   updateProduct,
   deleteProduct,

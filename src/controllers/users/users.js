@@ -14,7 +14,7 @@ const getUsers = async (req, res) => {
 // Get all users
 const getUser = async (req, res) => {
   const { email } = req.params;
-  console.log(email);
+
   try {
     const users = await User.findOne({ email: email }); // Fetch single user
     res.status(201).send(users);

@@ -5,13 +5,15 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductByEmail,
 } = require("../../controllers/products/products");
 const router = express.Router();
 
 router.get("/", getProducts);
+router.get("/single/:email", getProductByEmail);
 router.get("/:id", getProductById);
 router.post("/", createProduct);
 router.patch("/:id", updateProduct);
-router.delete("/", deleteProduct);
+router.delete("/:id", deleteProduct);
 
 module.exports = router;
