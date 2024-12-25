@@ -13,7 +13,7 @@ const getProducts = async (req, res) => {
 
 const getProductByEmail = async (req, res) => {
   const { email } = req.params; // Extract user ID from request parameters
-  console.log(email);
+
   try {
     // Query products where the user field matches the specific user ID
     const products = await Product.find().populate({

@@ -55,22 +55,22 @@ const createUser = async (req, res) => {
 
 // Update a user by ID
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { name, email, role, status, wishlist } = req.body;
+  const { id } = req.params; // Extract the ID from the URL
+  const { status } = req.body; // Extract the status from the request body
 
   try {
     // Find user by ID and update
     const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { name, email, role, status, wishlist },
-      { new: true, runValidators: true } // Return the updated document
+      id, // Filter by ID
+      { status }, // Update the `status` field
+      { new: true, runValidators: true } // Return the updated document and validate the update
     );
 
     if (!updatedUser) {
       return res.status(404).send({ error: "User not found" });
     }
 
-    res.status(200).send(updatedUser);
+    res.status(200).send(updatedUser); // Send the updated user as the response
   } catch (error) {
     res
       .status(500)
