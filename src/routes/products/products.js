@@ -7,12 +7,14 @@ const {
   deleteProduct,
   getProductByEmail,
 } = require("../../controllers/products/products");
+const tokenVerify = require("../../middlewares/tokenVerify");
+const sellerVerify = require("../../middlewares/sellerVerify");
 const router = express.Router();
 
 router.get("/", getProducts);
 router.get("/single/:email", getProductByEmail);
 router.get("/:id", getProductById);
-router.post("/", createProduct);
+router.post("/", tokenVerify, sellerVerify, createProduct);
 router.patch("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 
