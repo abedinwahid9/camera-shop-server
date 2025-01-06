@@ -15,13 +15,11 @@ const getWishlist = async (req, res) => {
 const updateWishlist = async (req, res) => {
   const { id } = req.params;
   const product = req.body.id;
-
   const updatedUser = await User.findByIdAndUpdate(
     id, // Filter by ID
     { $push: { wishlist: product } }, // Update the `status` field
     { new: true, runValidators: true } // Return the updated document and validate the update
   );
-
   res.status(201).send(updatedUser);
 };
 

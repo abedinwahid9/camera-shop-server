@@ -5,6 +5,7 @@ const {
 } = require("../../controllers/wishlists/wishlist");
 const router = express.Router();
 
+// wishlist api
 router.get("/:email", getWishlist);
 router.put("/:id", updateWishlist);
 
