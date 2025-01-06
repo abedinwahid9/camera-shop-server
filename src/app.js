@@ -4,6 +4,7 @@ const connectDb = require("./db/connentDb");
 const users = require("./routes/users/users");
 const products = require("./routes/products/products");
 const jwt = require("./routes/authentication/jwt");
+const wishlist = require("./routes/wishlist/wishlist");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -15,6 +16,7 @@ applyMiddlewares(app);
 app.use("/users", users);
 app.use("/products", products);
 app.use("/jwt", jwt);
+app.use("/wishlist", wishlist);
 
 app.get("/", (req, res) => {
   res.send({ message: "server is running" });
@@ -36,7 +38,7 @@ const main = async () => {
   // db connect
   await connectDb();
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port http://localhost:${PORT}`);
   });
 };
 

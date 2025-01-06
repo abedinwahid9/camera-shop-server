@@ -15,7 +15,7 @@ router.get("/", getProducts);
 router.get("/single/:email", getProductByEmail);
 router.get("/:id", getProductById);
 router.post("/", tokenVerify, sellerVerify, createProduct);
-router.patch("/:id", updateProduct);
+router.patch("/:id", tokenVerify, sellerVerify, updateProduct);
 router.delete("/:id", deleteProduct);
 
 module.exports = router;
