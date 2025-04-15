@@ -1,6 +1,7 @@
 const { mongoose } = require("mongoose");
 const Product = require("../../models/product");
 const User = require("../../models/user");
+const Wishlist = require("../../models/wishlist");
 
 const getWishlist = async (req, res) => {
   const email = req.params.email;
@@ -12,15 +13,38 @@ const getWishlist = async (req, res) => {
   }
 };
 
-const updateWishlist = async (req, res) => {
-  const { id } = req.params;
-  const product = req.body.id;
-  const updatedUser = await User.findByIdAndUpdate(
-    id, // Filter by ID
-    { $push: { wishlist: product } }, // Update the `status` field
-    { new: true, runValidators: true } // Return the updated document and validate the update
-  );
-  res.status(201).send(updatedUser);
+const addWishList = async (req, res) => {
+  try {
+    const wishList = new Wishlist(req.body);
+    await wishList.save();
+
+    const user = await User.findByIdAndUpdate(
+      req.body.user, // Filter by ID
+      { $push: { wishlist: req.body.products } }, // Update the `status` field
+      { new: true, runValidators: true } // Return the updated document and validate the update
+    );
+
+    console.log("user", user);
+
+    res.status(201).json(wishList);
+  } catch (error) {
+    console.error("Error creating product:", error);
+    res.status(500).json({ message: "Failed to create product", error });
+  }
 };
 
-module.exports = { getWishlist, updateWishlist };
+const removeWishListById = (req, res) => {
+  try {
+    const { id } = req.params;
+    const wishlist = Wishlist.findByIdAndDelete(id);
+    if (!wishlist) {
+      return res.status(404).json({ message: "Wishlist not found" });
+    }
+    res.status(200).json({ message: "Wishlist deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to remove product", error });
+  }
+};
+
+module.exports = { getWishlist, addWishList };

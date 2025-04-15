@@ -20,7 +20,13 @@ const userSchema = mongoose.Schema({
     type: String,
     require: [true, "need status"],
   },
-  wishlist: [],
+  wishlist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product", // Reference to the Product model
+      required: true,
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

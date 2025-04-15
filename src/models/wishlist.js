@@ -8,13 +8,15 @@ const wishlistSchema = new mongoose.Schema(
       ref: "User", // Reference to the User model
       required: true,
     },
-    products: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product", // Reference to the Product model
-        required: true,
-      },
-    ],
+    products: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product", // Reference to the Product model
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );
